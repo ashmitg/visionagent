@@ -213,10 +213,19 @@ Initially, navigate directly to a relevant URL, such as 'https://google.com/sear
             screenshotCaptured = false;
         }
 
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o-mini",
-            max_tokens: 1024,
-            messages: chatMessages,
+        const response = await fetch('/api/v1/chat_media', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "multipart/form-data"
+            },
+            body: JSON.stringify({
+              "user_id": "text",
+              "session_id": "text",
+              "chat_data": JSON.stringify(chatMessages),
+              "files": [
+                "binary"
+              ]
+            }),
         });
 
         const assistantMessage = response.choices[0].message;
