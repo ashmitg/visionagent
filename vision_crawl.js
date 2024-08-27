@@ -6,7 +6,6 @@ import fs from 'fs';
 
 puppeteer.use(StealthPlugin());
 
-const openai = new OpenAI();
 const delay = 8000;
 
 async function convertImageToBase64(imagePath) {
@@ -213,7 +212,7 @@ Initially, navigate directly to a relevant URL, such as 'https://google.com/sear
             screenshotCaptured = false;
         }
 
-        const response = await fetch('/api/v1/chat_media', {
+        const response = await fetch('http://localhost:8000/api/v1/chat_media', {
             method: 'POST',
             headers: {
               "Content-Type": "multipart/form-data"
@@ -227,6 +226,8 @@ Initially, navigate directly to a relevant URL, such as 'https://google.com/sear
               ]
             }),
         });
+
+        console.log(response, "response");
 
         const assistantMessage = response.choices[0].message;
         const assistantText = assistantMessage.content;
